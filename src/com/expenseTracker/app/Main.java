@@ -6,15 +6,18 @@ class Main {
 
 }
 class Board {
-    public Board() {
+    private Expense expense;
+
+    public Board(ArrayList<Expense> expenseArrL) {
 
     }
+
 }
 class Expense {
-    private ArrayList<String> title = new ArrayList<>();
-    private short i = 0;
-    public Expense(String title) {
-        this.title.add(title);
-        i++;
+    private String title;
+
+    
+    public String getTitle() {
+        return this.title;
     }
 }
