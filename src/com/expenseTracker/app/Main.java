@@ -1,7 +1,10 @@
 package com.expenseTracker.app;
 
 class Main {
-    protected static int total;
+
+}
+class Workspace {
+    
 }
 class Expense {
 
