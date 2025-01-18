@@ -30,4 +30,5 @@ bin/
 
 # Personal
 .idea/
+.idea
 *.iml
