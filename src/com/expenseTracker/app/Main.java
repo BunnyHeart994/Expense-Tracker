@@ -5,20 +5,29 @@ import java.util.Scanner;
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
+    private Board board;
 
     public static void main(String[] args) {
-        entryPoint();
+        boolean entryPoint = true;
+        short choice;
+        int monthlyWage;
+        String boardName;
+
+        while (entryPoint) { //MAIN LOOP
+            Print.printLn("Expense Tracker v0.1 by Henrique\n");
+            Print.print("Enter '1' to create a new expense board.\nEnter '0' to exit.\n---> ");
+            choice = scan.nextShort();
+            if (choice == 1) {
+                Print.print("Enter the board name: ");
+                boardName = scan.nextLine();
+                Print.print("Enter the monthly wage: ");
+                monthlyWage = scan.nextShort();
+                Board  = new Board(boardName, monthlyWage);
+            }
+        }
         /*testBoard.insertExpense("TEST", 300);
         testBoard.printExpensesDebug();
         testBoard.deleteExpense((short)0);*/
-
-    }
-    private static void entryPoint() {
-        short choice;
-        Print.printLn("Expense Tracker v0.1 by Henrique\n");
-        Print.print("Enter '1' to create a new expense board.\nEnter '0' to exit.\n---> ");
-        choice = scan.nextShort();
-        Board testBoard = new Board("TEST", 4000);
     }
 }
 class Board {
