@@ -21,6 +21,12 @@ class Board {
         this.monthlyWage = monthlyWage;
     }
 
+    public String getName() {
+        return this.name;
+    }
+    public int getMonthlyWage() {
+        return this.monthlyWage;
+    }
     public void insertExpense(String name, int cost) {
         this.expense = new Expense(name, cost);
         this.expenses.add(expense);
@@ -28,6 +34,9 @@ class Board {
     public void deleteExpense(short index) {
         this.expenses.remove(index);
     }
+    /*public void deleteExpense(String title) {
+        this.expenses.remove(title);
+    }*/
     public void printExpensesDebug() {
         for (short i = 0; i < expenses.size(); i++) {
             if (i == expenses.size() - 1)
