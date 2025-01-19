@@ -5,8 +5,7 @@ import java.util.Scanner;
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
-    private Board board;
-
+    public static ArrayList<Board> boardArrL = new ArrayList<>();
     public static void main(String[] args) {
         boolean entryPoint = true;
         short choice;
@@ -22,13 +21,16 @@ class Main {
                 boardName = scan.nextLine();
                 Print.print("Enter the monthly wage: ");
                 monthlyWage = scan.nextShort();
-                Board  = new Board(boardName, monthlyWage);
+                boardArrL.add(new Board(boardName));
             }
         }
         /*testBoard.insertExpense("TEST", 300);
         testBoard.printExpensesDebug();
         testBoard.deleteExpense((short)0);*/
     }
+    /*public static Board newBoard(String name) {
+        boardArrL.add(new Board(name));
+    }*/
 }
 class Board {
     private String name;
@@ -39,6 +41,9 @@ class Board {
     public Board(String name, int monthlyWage) {
         this.name = name;
         this.monthlyWage = monthlyWage;
+    }
+    public Board(String name) {
+        this.name = name;
     }
 
     public String getName() {
