@@ -1,13 +1,24 @@
 package com.expenseTracker.app;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class Main {
+    public static Scanner scan = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Print.printLn("Expense Tracker v0.1 by Henrique\n");
-        Board testBoard = new Board("TEST", 4000);
-        testBoard.insertExpense("TEST", 300);
+        entryPoint();
+        /*testBoard.insertExpense("TEST", 300);
         testBoard.printExpensesDebug();
+        testBoard.deleteExpense((short)0);*/
+
+    }
+    private static void entryPoint() {
+        short choice;
+        Print.printLn("Expense Tracker v0.1 by Henrique\n");
+        Print.print("Enter '1' to create a new expense board.\nEnter '0' to exit.\n---> ");
+        choice = scan.nextShort();
+        Board testBoard = new Board("TEST", 4000);
     }
 }
 class Board {
@@ -34,15 +45,12 @@ class Board {
     public void deleteExpense(short index) {
         this.expenses.remove(index);
     }
-    /*public void deleteExpense(String title) {
-        this.expenses.remove(title);
-    }*/
     public void printExpensesDebug() {
         for (short i = 0; i < expenses.size(); i++) {
             if (i == expenses.size() - 1)
-                Print.printLn(expenses.get(i).getName());
+                Print.printLn(expenses.get(i).getName() + " - $" + expense.getCost());
             else
-                Print.printLn(expenses.get(i).getName() + "\n");
+                Print.printLn(expenses.get(i).getName() + " - $" + expense.getCost() + "\n");
         }
     }
 }
@@ -57,7 +65,7 @@ class Expense {
     public String getName() {
         return this.name;
     }
-    public Expense addExpense(String name, int cost) {
-        return new Expense(name, cost);
+    public int getCost() {
+        return this.cost;
     }
 }
