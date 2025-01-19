@@ -1,22 +1,40 @@
 package com.expenseTracker.app;
 
 import java.util.ArrayList;
-//import com.expenseTracker.*;
 
 class Main {
     public static void main(String[] args) {
         Print.printLn("Expense Tracker v0.1 by Henrique\n");
-
+        Board testBoard = new Board("TEST", 4000);
+        testBoard.insertExpense("TEST", 300);
+        testBoard.printExpensesDebug();
     }
 }
 class Board {
-    private ArrayList<Expense> expenses;
+    private String name;
+    private int monthlyWage;
+    private ArrayList<Expense> expenses = new ArrayList<>();
+    public Expense expense;
 
-    public Board(ArrayList<Expense> expenseArrL, String name) {
-
+    public Board(String name, int monthlyWage) {
+        this.name = name;
+        this.monthlyWage = monthlyWage;
     }
-    public void addExpense(Expense expense, String name, int cost) {
-        this.expenses = expenses.add();
+
+    public void insertExpense(String name, int cost) {
+        this.expense = new Expense(name, cost);
+        this.expenses.add(expense);
+    }
+    public void deleteExpense(short index) {
+        this.expenses.remove(index);
+    }
+    public void printExpensesDebug() {
+        for (short i = 0; i < expenses.size(); i++) {
+            if (i == expenses.size() - 1)
+                Print.printLn(expenses.get(i).getName());
+            else
+                Print.printLn(expenses.get(i).getName() + "\n");
+        }
     }
 }
 class Expense {
