@@ -7,12 +7,12 @@ class Main {
     public static Scanner scan = new Scanner(System.in);
     public static ArrayList<Board> boardArrL = new ArrayList<>();
     public static void main(String[] args) {
-        boolean entryPoint = true;
+        boolean entryPointFlag = true;
         short choice;
         int monthlyWage;
         String boardName;
 
-        while (entryPoint) { //MAIN LOOP
+        while (entryPointFlag) { //MAIN LOOP
             Print.printLn("Expense Tracker v0.1 by Henrique\n");
             Print.print("Enter '1' to create a new expense board.\nEnter '0' to exit.\n---> ");
             choice = scan.nextShort();
@@ -24,9 +24,6 @@ class Main {
                 boardArrL.add(new Board(boardName));
             }
         }
-        /*testBoard.insertExpense("TEST", 300);
-        testBoard.printExpensesDebug();
-        testBoard.deleteExpense((short)0);*/
     }
     /*public static Board newBoard(String name) {
         boardArrL.add(new Board(name));
