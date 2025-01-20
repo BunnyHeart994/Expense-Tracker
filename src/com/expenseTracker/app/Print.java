@@ -5,6 +5,6 @@ public class Print {
         System.out.println(text);
     }
     public static void print(Object text) {
-        System.out.println(text);
+        System.out.print(text);
     }
 }
