@@ -6,28 +6,38 @@ import java.util.Scanner;
 class Main {
     public static Scanner scan = new Scanner(System.in);
     public static ArrayList<Board> boardArrL = new ArrayList<>();
+
     public static void main(String[] args) {
         boolean entryPointFlag = true;
         short choice;
         int monthlyWage;
         String boardName;
 
+        Print.printLn("Expense Tracker v0.1 by Henrique\n");
         while (entryPointFlag) { //MAIN LOOP
-            Print.printLn("Expense Tracker v0.1 by Henrique\n");
-            Print.print("Enter '1' to create a new expense board.\nEnter '0' to exit.\n---> ");
-            choice = scan.nextShort();
+            Print.print("=".repeat(10) + "MAIN MENU" + "=".repeat(10) + "\n" +
+                    "1 - Insert new expense\n" + "2 - Delete expense\n3 - List expenses\n0 - Exit\n" +
+                    "=".repeat(29) + "\n---> ");
+            choice = Short.parseShort(scan.nextLine());
             if (choice == 1) {
                 Print.print("Enter the board name: ");
                 boardName = scan.nextLine();
                 Print.print("Enter the monthly wage: ");
-                monthlyWage = scan.nextShort();
-                boardArrL.add(new Board(boardName));
+                monthlyWage = Short.parseShort(scan.nextLine());
+                boardArrL.add(new Board(boardName, monthlyWage));
             }
+            else if (choice == 0) {
+                Print.printLn("Thanks for using. Bye-bye.");
+                entryPointFlag = false;
+            }
+            else {
+                Print.printLn("Invalid option. Try again.");
+                //entryPointFlag = true;
+            }
+
         }
     }
-    /*public static Board newBoard(String name) {
-        boardArrL.add(new Board(name));
-    }*/
+
 }
 class Board {
     private String name;
@@ -39,9 +49,9 @@ class Board {
         this.name = name;
         this.monthlyWage = monthlyWage;
     }
-    public Board(String name) {
+    /*public Board(String name) {
         this.name = name;
-    }
+    }*/
 
     public String getName() {
         return this.name;
