@@ -74,6 +74,9 @@ class Main {
                         Print.print("_".repeat(29) + "\nTo which board will this expense belong to?\n--> ");
                         currentBoard = Short.parseShort(scan.nextLine());
                         currentBoard--;
+                        if (currentBoard > boardArrL.size() - 1)
+                            Print.printLn("There aren't more than " + boardArrL.size() + " boards.\n" +
+                                    "Try again.");
                     }
                 }
             }
