@@ -17,8 +17,8 @@ class Main {
         Print.printLn("Expense Tracker v0.1 by Henrique\n");
         while (entryPointFlag) { //MAIN LOOP
             Print.print("=".repeat(10) + "MAIN MENU" + "=".repeat(10) + "\n" +
-                    "1 - Create new board\n2 - Insert new expense\n" + "2 - Delete expense\n" +
-                            "3 - List expenses\n0 - Exit\n" + "=".repeat(29) + "\n---> ");
+                    "1 - Create new board\n2 - Insert new expense\n" + "3 - Delete expense\n" +
+                            "4 - List expenses\n0 - Exit\n" + "=".repeat(29) + "\n---> ");
 
             choice = Short.parseShort(scan.nextLine());
             if (choice == 0) {
