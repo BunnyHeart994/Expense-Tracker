@@ -5,36 +5,54 @@ import java.util.Scanner;
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
-    public static ArrayList<Board> boardArrL = new ArrayList<>();
+    private static ArrayList<Board> boardArrL = new ArrayList<>();
+    //private ArrayList<Expense> expenses = new ArrayList<>();
 
     public static void main(String[] args) {
-        boolean entryPointFlag = true;
-        short choice;
-        int monthlyWage;
-        String boardName;
+        boolean entryPointFlag = true, secondFlag = true;
+        short choice, currentBoard = -1;
+        int monthlyWage, expenseCost;
+        String boardName, expenseTitle;
 
         Print.printLn("Expense Tracker v0.1 by Henrique\n");
         while (entryPointFlag) { //MAIN LOOP
             Print.print("=".repeat(10) + "MAIN MENU" + "=".repeat(10) + "\n" +
-                    "1 - Insert new expense\n" + "2 - Delete expense\n3 - List expenses\n0 - Exit\n" +
-                    "=".repeat(29) + "\n---> ");
+                    "1 - Create new board\n2 - Insert new expense\n" + "2 - Delete expense\n" +
+                            "3 - List expenses\n0 - Exit\n" + "=".repeat(29) + "\n---> ");
+
             choice = Short.parseShort(scan.nextLine());
-            if (choice == 1) {
+            if (choice == 0) {
+                Print.printLn("Thanks for using. Bye-bye.");
+                secondFlag = false;
+                break;
+            }
+            else if (choice == 1) {
                 Print.print("Enter the board name: ");
                 boardName = scan.nextLine();
                 Print.print("Enter the monthly wage: ");
                 monthlyWage = Short.parseShort(scan.nextLine());
                 boardArrL.add(new Board(boardName, monthlyWage));
+                currentBoard++;
+                Print.printLn("You just created board No. " + currentBoard +
+                        " with the name '" + boardArrL.get(currentBoard).getName() + "'.");
+                continue;
             }
-            else if (choice == 0) {
-                Print.printLn("Thanks for using. Bye-bye.");
-                entryPointFlag = false;
+            else if (choice == 2) {
+                Print.print("Expense title: ");
+                expenseTitle = scan.nextLine();
+                Print.print("Cost: ");
+                expenseCost = Short.parseShort(scan.nextLine());
+                boardArrL.get(currentBoard).insertExpense(expenseTitle, expenseCost);
+                Print.printLn("'" + expenseTitle + "' added to board No. " + currentBoard + ".");
+                continue;
             }
             else {
                 Print.printLn("Invalid option. Try again.");
-                //entryPointFlag = true;
+                secondFlag = false;
             }
-
+            while (secondFlag) {
+                
+            }
         }
     }
 
