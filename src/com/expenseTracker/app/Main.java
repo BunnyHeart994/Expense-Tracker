@@ -10,7 +10,7 @@ class Main {
 
     public static void main(String[] args) {
         boolean entryPointFlag = true, secondFlag = true;
-        short choice, currentBoard = -1, boardCount = 0;
+        short choice, currentBoard = 0, boardCount = 0;
         int monthlyWage, expenseCost;
         String boardName, expenseTitle, setActiveStr;
 
@@ -52,13 +52,22 @@ class Main {
                     Print.print((i + 1) + " | ");
                 }
                 Print.print("\nWhich board would you like to be focused?\n--> ");
-                currentBoard = Short.parseShort(scan.nextLine());
-                currentBoard--;
+                while (true) {
+                    currentBoard = Short.parseShort(scan.nextLine());
+                    if (currentBoard > boardArrL.size()) {
+                        Print.print("There are only " + boardArrL.size() + " boards available.\n" +
+                                "Try again.\n--> ");
+                    }
+                    else if (currentBoard < 1) {
+                        Print.print("Invalid number. Try again.\n--> ");
+                    }
+                    else { currentBoard--; break; }
+                }
                 Print.printLn("Focusing board No. " + (currentBoard + 1) + ".\n" + "*".repeat(29));
             }
             else if (choice == 3) {
                 while(true) {
-                    if (currentBoard != -1) {
+                    if (boardCount == 1) {
                         Print.printLn("_".repeat(29) + "\nEXPENSE INSERTION");
 
                         Print.print("Board No. " + (currentBoard + 1) + " selected.\nExpense title: ");
