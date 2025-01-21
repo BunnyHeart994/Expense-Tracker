@@ -6,6 +6,7 @@ import java.util.Scanner;
 class Main {
     public static Scanner scan = new Scanner(System.in);
     private static ArrayList<Board> boardArrL = new ArrayList<>();
+    private static Board board;
     //private ArrayList<Expense> expenses = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -19,7 +20,12 @@ class Main {
             Print.print("=".repeat(10) + "MAIN MENU" + "=".repeat(10) + "\n" +
                     "1 - Create new board\n2 - Set active board\n3 - Insert new expense\n" +
                     "4 - Delete expense\n5 - List expenses\n0 - Exit\n" + "=".repeat(29) + "\n---> ");
-
+            //1 - create new board
+            //2 - set active board
+            //3 - delete board
+            //4 - insert new expense
+            //5 - remove expense
+            //6 - list expense
             choice = Short.parseShort(scan.nextLine());
             if (choice == 0) {
                 Print.printLn("Thanks for using. Bye-bye.");
@@ -27,6 +33,7 @@ class Main {
                 break;
             }
             else if (choice == 1) {
+                Print.printLn("_".repeat(29) + "\nBOARD CREATION\n" + "¨".repeat(29));
                 Print.print("Enter the board name: ");
                 boardName = scan.nextLine();
                 Print.print("Enter the monthly wage: ");
@@ -46,12 +53,9 @@ class Main {
                     continue;
             }
             else if (choice == 2) {
-                Print.printLn("_".repeat(29) + "\nSET ACTIVE BOARD");
-                Print.print("Current boards: ");
-                for (short i = 0; i < boardArrL.size(); i++) {
-                    Print.print((i + 1) + " | ");
-                }
-                Print.print("\nWhich board would you like to be focused?\n--> ");
+                Print.printLn("_".repeat(29) + "\nSET ACTIVE BOARD\n" + "¨".repeat(29));
+                Board.listBoards(boardArrL);
+                Print.print("Which board would you like to be focused?\n--> ");
                 while (true) {
                     currentBoard = Short.parseShort(scan.nextLine());
                     if (currentBoard > boardArrL.size()) {
@@ -66,9 +70,26 @@ class Main {
                 Print.printLn("Focusing board No. " + (currentBoard + 1) + ".\n" + "*".repeat(29));
             }
             else if (choice == 3) {
+                Print.printLn("_".repeat(29) + "\nDELETE BOARD\n" + "¨".repeat(29));
+                while(true) {
+                    Board.listBoards(boardArrL);
+                    Print.print("Choose a board to remove: ");
+                    short removalTarget = Short.parseShort(scan.nextLine());
+                    removalTarget--;
+                    if (removalTarget >= 0 && removalTarget < boardArrL.size()) {//TODO
+                        boardArrL.remove(removalTarget);
+                        Print.printLn("Board No. '" + (removalTarget + 1) + "' deleted.");
+                        break;
+                    }
+                    else {
+                        Print.printLn("Board No. '" + removalTarget + "' doesn't exist. Try again.");
+                    }
+                }
+            }
+            else if (choice == 4) {
                 while(true) {
                     if (boardCount == 1) {
-                        Print.printLn("_".repeat(29) + "\nEXPENSE INSERTION");
+                        Print.printLn("_".repeat(29) + "\nEXPENSE INSERTION"  + "¨".repeat(29));
 
                         Print.print("Board No. " + (currentBoard + 1) + " selected.\nExpense title: ");
                         expenseTitle = scan.nextLine();
@@ -89,8 +110,8 @@ class Main {
                     }
                 }
             }
-            else if (choice == 4) {
-                Print.print("");
+            else if (choice == 5) {
+
             }
             else {
                 Print.printLn("Invalid option. Try again.");
@@ -108,7 +129,7 @@ class Board {
     private String name;
     private int monthlyWage;
     private ArrayList<Expense> expenses = new ArrayList<>();
-    public Expense expense;
+    protected Expense expense;
 
     public Board(String name, int monthlyWage) {
         this.name = name;
@@ -138,6 +159,13 @@ class Board {
             else
                 Print.printLn(expenses.get(i).getName() + " - $" + expense.getCost() + "\n");
         }
+    }
+    protected static void listBoards(ArrayList<Board> arrList) {
+        Print.print("Current boards: ");
+        for (short i = 0; i < arrList.size(); i++) {
+            Print.print((i + 1) + " | ");
+        }
+        Print.printLn("\n");
     }
 }
 class Expense {
