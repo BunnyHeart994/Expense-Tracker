@@ -18,21 +18,22 @@ class Main {
         Print.printLn("Expense Tracker v0.1 by Henrique\n");
         while (entryPointFlag) { //MAIN LOOP
             Print.print("=".repeat(10) + "MAIN MENU" + "=".repeat(10) + "\n" +
-                    "1 - Create new board\n2 - Set active board\n3 - Insert new expense\n" +
-                    "4 - Delete expense\n5 - List expenses\n0 - Exit\n" + "=".repeat(29) + "\n---> ");
+                    "1 - Create new board\n2 - Set active board\n3 - Delete board\n" +
+                    "4 - Insert new expense\n5 - Remove expenses\n6 - List expenses\n" +
+                    "0 - Exit\n" + "=".repeat(29) + "\n---> ");
             //1 - create new board
             //2 - set active board
-            //3 - delete board
-            //4 - insert new expense
-            //5 - remove expense
-            //6 - list expense
+            //3 - list boards
+            //4 - delete board
+            //5 - insert new expense
+            //6 - remove expense
+            //7 - list expense
             choice = Short.parseShort(scan.nextLine());
             if (choice == 0) {
                 Print.printLn("Thanks for using. Bye-bye.");
                 secondFlag = false;
                 break;
-            }
-            else if (choice == 1) {
+            } else if (choice == 1) {
                 Print.printLn("_".repeat(29) + "\nBOARD CREATION\n" + "¨".repeat(29));
                 Print.print("Enter the board name: ");
                 boardName = scan.nextLine();
@@ -42,17 +43,19 @@ class Main {
                 boardCount++;
                 Print.printLn("You just created board No. " + boardCount +
                         " with the name '" + boardArrL.get(boardCount - 1).getName() + "'.");
-                Print.print("Set newly created board as current active board? ('Y' or 'N')\n--> ");
-                setActiveStr = scan.nextLine();
-                if (setActiveStr.equalsIgnoreCase("y")) {
-                    currentBoard = (short) (boardCount - 1);
-                    Print.printLn("*".repeat(29));
-                    continue;
+                while (true) {
+                    Print.print("Set newly created board as current active board? ('Y' or 'N')\n--> ");
+                    setActiveStr = scan.nextLine();
+                    if (setActiveStr.equalsIgnoreCase("y")) {
+                        currentBoard = (short) (boardCount - 1);
+                        Print.printLn("Board No. '" + (currentBoard + 1) + "' set to active.");
+                        Print.printLn("*".repeat(29));
+                        break;
+                    } else if (setActiveStr.equalsIgnoreCase("n"))
+                        break;
+                    else Print.printLn("Invalid option. Try again.");
                 }
-                else if (setActiveStr.equalsIgnoreCase("n"))
-                    continue;
-            }
-            else if (choice == 2) {
+            } else if (choice == 2) {
                 Print.printLn("_".repeat(29) + "\nSET ACTIVE BOARD\n" + "¨".repeat(29));
                 Board.listBoards(boardArrL);
                 Print.print("Which board would you like to be focused?\n--> ");
@@ -61,15 +64,14 @@ class Main {
                     if (currentBoard > boardArrL.size()) {
                         Print.print("There are only " + boardArrL.size() + " boards available.\n" +
                                 "Try again.\n--> ");
-                    }
-                    else if (currentBoard < 1) {
+                    } else if (currentBoard < 1) {
                         Print.print("Invalid number. Try again.\n--> ");
-                    }
-                    else { currentBoard--; break; }
+                    } else { currentBoard--; break; }
                 }
                 Print.printLn("Focusing board No. " + (currentBoard + 1) + ".\n" + "*".repeat(29));
-            }
-            else if (choice == 3) {
+            } else if (choice == 3) {
+                Board.listBoards(boardArrL);
+            } else if (choice == 4) {
                 Print.printLn("_".repeat(29) + "\nDELETE BOARD\n" + "¨".repeat(29));
                 while(true) {
                     Board.listBoards(boardArrL);
@@ -80,13 +82,11 @@ class Main {
                         boardArrL.remove(removalTarget);
                         Print.printLn("Board No. '" + (removalTarget + 1) + "' deleted.");
                         break;
-                    }
-                    else {
+                    } else {
                         Print.printLn("Board No. '" + removalTarget + "' doesn't exist. Try again.");
                     }
                 }
-            }
-            else if (choice == 4) {
+            } else if (choice == 5) {
                 while(true) {
                     if (boardCount == 1) {
                         Print.printLn("_".repeat(29) + "\nEXPENSE INSERTION"  + "¨".repeat(29));
@@ -99,8 +99,7 @@ class Main {
                         Print.printLn("'" + expenseTitle + "' added to board No. " + (currentBoard + 1) + ".");
                         Print.printLn("*".repeat(29));
                         break;
-                    }
-                    else {
+                    } else {
                         Print.print("_".repeat(29) + "\nTo which board will this expense belong to?\n--> ");
                         currentBoard = Short.parseShort(scan.nextLine());
                         currentBoard--;
@@ -109,11 +108,11 @@ class Main {
                                     "Try again.");
                     }
                 }
-            }
-            else if (choice == 5) {
-
-            }
-            else {
+            } else if (choice == 6) {
+                Print.printLn("_".repeat(29) + "\nDELETE EXPENSE\n" + "¨".repeat(29));
+                /*if (currentBoard != )
+                        Print.print("Which ")*/
+            } else {
                 Print.printLn("Invalid option. Try again.");
                 Print.printLn("*".repeat(29));
                 secondFlag = false;
@@ -162,10 +161,14 @@ class Board {
     }
     protected static void listBoards(ArrayList<Board> arrList) {
         Print.print("Current boards: ");
-        for (short i = 0; i < arrList.size(); i++) {
-            Print.print((i + 1) + " | ");
+        if (arrList.isEmpty())
+            Print.printLn("NO BOARDS");
+        else {
+            for (short i = 0; i < arrList.size(); i++) {
+                Print.print((i + 1) + " | ");
+            }
+            Print.printLn("\n");
         }
-        Print.printLn("\n");
     }
 }
 class Expense {
