@@ -11,9 +11,9 @@ class Main {
 
     public static void main(String[] args) {
         boolean entryPointFlag = true, secondFlag = true;
-        short choice, currentBoard = 0, boardCount = 0;
+        short choice, currentBoard = 0, boardCount = 0, targetBoard, targetExpense;
         int monthlyWage, expenseCost;
-        String boardName, expenseTitle, setActiveStr;
+        String boardName, expenseTitle, setActiveStr, tempExpense;
 
         Print.printLn("Expense Tracker v0.1 by Henrique\n");
         while (entryPointFlag) { //MAIN LOOP
@@ -27,7 +27,7 @@ class Main {
             //4 - delete board
             //5 - insert new expense
             //6 - remove expense
-            //7 - list expense
+            //7 - list expenses
             choice = Short.parseShort(scan.nextLine());
             if (choice == 0) {
                 Print.printLn("Thanks for using. Bye-bye.");
@@ -110,8 +110,18 @@ class Main {
                 }
             } else if (choice == 6) {
                 Print.printLn("_".repeat(29) + "\nDELETE EXPENSE\n" + "¨".repeat(29));
-                /*if (currentBoard != )
-                        Print.print("Which ")*/
+                if (boardCount > 1) {
+                    Print.print("Which board does the expense belong to?\n--> ");
+                    targetBoard = Short.parseShort(scan.nextLine());
+                    //TODO
+                } else if (boardCount == 1) {
+                    Print.print("Board No. '" + currentBoard + "' selected.\n" +
+                            "Which expense would you like to delete?\n--> ");
+                    boardArrL.get(currentBoard).listExpenses();
+                    targetExpense = Short.parseShort(scan.nextLine());
+                    boardArrL.get(currentBoard).deleteExpense(targetExpense);
+                    //TODO: add descriptive message
+                }
             } else {
                 Print.printLn("Invalid option. Try again.");
                 Print.printLn("*".repeat(29));
@@ -134,9 +144,6 @@ class Board {
         this.name = name;
         this.monthlyWage = monthlyWage;
     }
-    /*public Board(String name) {
-        this.name = name;
-    }*/
 
     public String getName() {
         return this.name;
@@ -165,6 +172,17 @@ class Board {
             Print.printLn("NO BOARDS");
         else {
             for (short i = 0; i < arrList.size(); i++) {
+                Print.print((i + 1) + " | ");
+            }
+            Print.printLn("\n");
+        }
+    }
+    protected void listExpenses() {
+        Print.print("Current expenses: ");
+        if (expenses.isEmpty())
+            Print.print("NO EXPENSES");
+        else {
+            for (short i = 0; i < expenses.size(); i++) {
                 Print.print((i + 1) + " | ");
             }
             Print.printLn("\n");
