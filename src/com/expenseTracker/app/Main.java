@@ -18,9 +18,9 @@ class Main {
         Print.printLn("Expense Tracker v0.1 by Henrique\n");
         while (entryPointFlag) { //MAIN LOOP
             Print.print("=".repeat(10) + "MAIN MENU" + "=".repeat(10) + "\n" +
-                    "1 - Create new board\n2 - Set active board\n3 - Delete board\n" +
-                    "4 - Insert new expense\n5 - Remove expenses\n6 - List expenses\n" +
-                    "0 - Exit\n" + "=".repeat(29) + "\n---> ");
+                    "1 - Create new board\n2 - Set active board\n3 - List boards\n" +
+                    "4 - Delete board\n5 - Insert new expense\n6 - Remove expenses\n" +
+                    "6 - List expenses\n0 - Exit\n" + "=".repeat(29) + "\n---> ");
             //1 - create new board
             //2 - set active board
             //3 - list boards
@@ -40,9 +40,9 @@ class Main {
                 Print.print("Enter the monthly wage: ");
                 monthlyWage = Short.parseShort(scan.nextLine());
                 boardArrL.add(new Board(boardName, monthlyWage));
-                boardCount++;
+                boardCount++; //INCREMENTS boardCount
                 Print.printLn("You just created board No. " + boardCount +
-                        " with the name '" + boardArrL.get(boardCount - 1).getName() + "'.");
+                        " with the name '" + boardArrL.get(boardCount - 1).getName() + "'."); //PROBLEM HERE
                 while (true) {
                     Print.print("Set newly created board as current active board? ('Y' or 'N')\n--> ");
                     setActiveStr = scan.nextLine();
@@ -78,9 +78,11 @@ class Main {
                     Print.print("Choose a board to remove: ");
                     short removalTarget = Short.parseShort(scan.nextLine());
                     removalTarget--;
-                    if (removalTarget >= 0 && removalTarget < boardArrL.size()) {//TODO
+                    if (removalTarget >= 0 && removalTarget < boardArrL.size()) {
+                        //TODO ?
                         boardArrL.remove(removalTarget);
                         Print.printLn("Board No. '" + (removalTarget + 1) + "' deleted.");
+                        boardCount--;
                         break;
                     } else {
                         Print.printLn("Board No. '" + removalTarget + "' doesn't exist. Try again.");
@@ -111,16 +113,39 @@ class Main {
             } else if (choice == 6) {
                 Print.printLn("_".repeat(29) + "\nDELETE EXPENSE\n" + "¨".repeat(29));
                 if (boardCount > 1) {
-                    Print.print("Which board does the expense belong to?\n--> ");
-                    targetBoard = Short.parseShort(scan.nextLine());
-                    //TODO
+                    while (true) {
+                        Print.print("Which board does the expense belong to?\n--> ");
+                        targetBoard = Short.parseShort(scan.nextLine());
+                        targetBoard--;
+                        if (targetBoard < 0 || targetBoard >= boardArrL.size()) {
+                            Print.printLn("This board doesn't exist. Try again.");
+                        } else {
+                            while (true) {
+                                boardArrL.get(targetBoard).listExpenses();
+                                Print.print("Which expense would you like to delete?\n--> ");
+                                targetExpense = Short.parseShort(scan.nextLine());
+                                targetExpense--;
+                                if (targetExpense < 0 ||
+                                        targetExpense >= boardArrL.get(currentBoard).expenses.size())
+                                    Print.print("This expense doesn't exist. Try again.\n--> ");
+                                else {
+                                    boardArrL.get(targetBoard).deleteExpense(targetExpense);
+                                    Print.printLn("*".repeat(29));
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
                 } else if (boardCount == 1) {
-                    Print.print("Board No. '" + currentBoard + "' selected.\n" +
-                            "Which expense would you like to delete?\n--> ");
+                    Print.printLn("Board No. '" + currentBoard + 1 + "' selected.");
                     boardArrL.get(currentBoard).listExpenses();
+                    Print.print("Which expense would you like to delete?\n--> ");
                     targetExpense = Short.parseShort(scan.nextLine());
+                    targetExpense--;
                     boardArrL.get(currentBoard).deleteExpense(targetExpense);
-                    //TODO: add descriptive message
+                    Print.print("'" + boardArrL.get(currentBoard).expenses.get(targetExpense).getName() +
+                    		"' from board No. " + (currentBoard + 1) + " deleted.");
                 }
             } else {
                 Print.printLn("Invalid option. Try again.");
@@ -137,7 +162,7 @@ class Main {
 class Board {
     private String name;
     private int monthlyWage;
-    private ArrayList<Expense> expenses = new ArrayList<>();
+    protected ArrayList<Expense> expenses = new ArrayList<>();
     protected Expense expense;
 
     public Board(String name, int monthlyWage) {
